@@ -27,10 +27,10 @@ WebSocket 建立后，客户端首先声明角色：
     "instances": [
       {
         "id": "instance-id",
-        "name": "Drawer/设备状态",
+        "name": "Drawer/串口设置",
         "component": "Drawer",
         "slot": "equipPanel.drawer",
-        "import": "@/components/Drawer/Drawer",
+        "import": "shroom-backend-sdk/UI/shroomui",
         "version": "1.0.0",
         "props": { "title": "设备状态", "show": true },
         "unmapped": {}

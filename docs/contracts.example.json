@@ -1,22 +1,19 @@
 {
   "Drawer": {
     "component": "Drawer",
-    "import": "@/components/Drawer/Drawer",
+    "import": "shroom-backend-sdk/UI/shroomui",
     "version": "1.0.0",
     "propMap": {
-      "显示": "show",
       "标题": "title",
-      "方向": "direction",
-      "层级": "zindex",
-      "显示关闭按钮": "close",
-      "点击遮罩关闭": "asideClose"
+      "显示": "show",
+      "展开方向": "direction",
+      "显示外侧开关": "asideClose",
+      "层级": "zindex"
     },
     "valueMap": {
       "direction": {
         "左侧": "left",
-        "右侧": "right",
-        "顶部": "top",
-        "底部": "bottom"
+        "右侧": "right"
       }
     },
     "numberProps": [
@@ -24,26 +21,12 @@
     ],
     "jsonProps": []
   },
-  "IconAndText": {
-    "component": "IconAndText",
-    "import": "@/components/IconAndText/IconAndText",
-    "version": "1.0.0",
-    "propMap": {
-      "文字": "text",
-      "图标": "icon",
-      "禁用": "disabled"
-    },
-    "valueMap": {},
-    "numberProps": [],
-    "jsonProps": []
-  },
   "Select": {
     "component": "Select",
-    "import": "@/components/Select/Select",
+    "import": "shroom-backend-sdk/UI/shroomui",
     "version": "1.0.0",
     "propMap": {
-      "占位文字": "placeholder",
-      "禁用": "disabled",
+      "默认值": "defaultValue",
       "选项": "options"
     },
     "valueMap": {},
@@ -51,6 +34,45 @@
     "jsonProps": [
       "options"
     ]
+  },
+  "AsyncState": {
+    "component": "AsyncState",
+    "import": "shroom-backend-sdk/UI/shroomui",
+    "version": "1.0.0",
+    "propMap": {
+      "状态": "status",
+      "提示文字": "message",
+      "操作按钮文字": "actionLabel"
+    },
+    "valueMap": {
+      "status": {
+        "加载中": "loading",
+        "空数据": "empty",
+        "错误": "error"
+      }
+    },
+    "numberProps": [],
+    "jsonProps": []
+  },
+  "MetricValue": {
+    "component": "MetricValue",
+    "import": "shroom-backend-sdk/UI/shroomui",
+    "version": "1.0.0",
+    "propMap": {
+      "指标名": "label",
+      "数值": "value",
+      "单位": "unit",
+      "小数位": "precision",
+      "空值占位": "emptyValue",
+      "状态色": "indicatorColor",
+      "排版": "layout",
+      "对齐": "align"
+    },
+    "valueMap": {},
+    "numberProps": [
+      "value",
+      "precision"
+    ],
+    "jsonProps": []
   }
 }
-

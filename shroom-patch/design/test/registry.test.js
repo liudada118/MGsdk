@@ -3,15 +3,23 @@ import assert from 'node:assert/strict'
 
 import {
   getDesignComponent,
+  listDesignComponents,
   registerDesignComponent,
   resolveDesignProps,
   validateDesignProps,
 } from '../registry.js'
+import { generatedComponents } from '../generated/components.js'
 
-test('预注册 Drawer、IconAndText 和 Select', () => {
-  assert.ok(getDesignComponent('Drawer'))
-  assert.ok(getDesignComponent('IconAndText'))
-  assert.ok(getDesignComponent('Select'))
+test('组件清单里的每个组件都已预注册', () => {
+  const names = Object.keys(generatedComponents)
+  assert.ok(names.length >= 3, '生成的注册表不应为空')
+  for (const name of names) {
+    assert.ok(getDesignComponent(name), `${name} 应已注册`)
+  }
+  assert.deepEqual(
+    listDesignComponents().map((definition) => definition.name).sort(),
+    [...names].sort(),
+  )
 })
 
 test('非法设计值回退到代码默认值并发出 warning', () => {

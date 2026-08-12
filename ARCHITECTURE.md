@@ -6,7 +6,7 @@
 
 Shroom 设计桥是一套本机设计配置同步工具，将 MasterGo 画布中的组件实例属性转换为代码侧 props，经本地 WebSocket 服务校验、原子落盘并广播到 Shroom React 前端。链路断开时，前端继续使用代码默认值；设计配置不会成为生产运行的硬依赖。
 
-系统由三部分组成：MasterGo 桌面插件、本地 Node.js 设计桥、可复制进 Shroom 的 React/Zustand 消费层。组件清单 `design-system/components.json` 是唯一真相：MasterGo 组件属性、`shroom/contract` 和前端 registry 都由它推导，加组件只改这一处。当前登记 Drawer、IconAndText、Select。除实时连接外，也支持把配置独立导出到本项目，再由用户手动复制进 Shroom 并以静态模式加载。
+系统由三部分组成：MasterGo 桌面插件、本地 Node.js 设计桥、可复制进 Shroom 的 React/Zustand 消费层。组件清单 `design-system/components.json` 是唯一真相：MasterGo 组件属性、`shroom/contract` 和前端 registry 都由它推导，加组件只改这一处。清单对齐 `E:/ShroomSDK/UI/shroomui`，当前登记 Drawer、Select、AsyncState、ChartPanel、MetricValue、ToolbarAction、SettingControlRow、DraggablePanel 八个展示组件。除实时连接外，也支持把配置独立导出到本项目，再由用户手动复制进 Shroom 并以静态模式加载。
 
 ## 2. 技术栈
 

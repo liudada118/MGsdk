@@ -261,7 +261,14 @@ async function run() {
   // 组件清单被内联进 bundle，面板的组件下拉靠它填充
   const publishedManifest = uiMessages.find((message) => message.type === 'manifest:components')
   assert.ok(publishedManifest, '插件初始化后应广播组件清单')
-  assert.deepEqual(publishedManifest.components, ['Drawer', 'IconAndText', 'Select'])
+  // 跟着组件清单走，避免每加一个组件就要改测试
+  const manifestOnDisk = JSON.parse(
+    fs.readFileSync(path.join(pluginRoot, '..', 'design-system', 'components.json'), 'utf8')
+  )
+  assert.deepEqual(
+    Array.from(publishedManifest.components),
+    require('../src/derive').listComponents(manifestOnDisk)
+  )
 
   page.selection = [instance]
   eventHandlers.selectionchange(['instance-1'])
@@ -350,24 +357,23 @@ async function run() {
   const scaffolded = uiMessages.find((message) => message.type === 'scaffold:result')
   assert.ok(scaffolded && scaffolded.ok, '执行脚手架消息后应成功返回 scaffold:result')
   assert.equal(scaffolded.component, 'Drawer')
-  // 清单里 Drawer 有 5 个可创建属性，主组件已存在“标题”
+  // 清单里 Drawer 有 4 个可创建属性，主组件已存在“标题”
   assert.deepEqual(addedProperties.map((property) => property.name), [
     '显示',
-    '层级',
-    '显示关闭按钮',
-    '点击遮罩关闭'
+    '显示外侧开关',
+    '层级'
   ])
-  assert.equal(scaffolded.created, 4)
+  assert.equal(scaffolded.created, 3)
   assert.equal(scaffolded.skipped, 1)
   const writtenContract = JSON.parse(sharedPluginData.get('shroom/contract'))
   assert.equal(writtenContract.component, 'Drawer')
-  assert.equal(writtenContract.propMap['点击遮罩关闭'], 'asideClose')
+  assert.equal(writtenContract.propMap['显示外侧开关'], 'asideClose')
   assert.deepEqual(writtenContract.numberProps, ['zindex'])
   assert.equal(writtenContract.valueMap.direction['右侧'], 'right')
 
   // 可变属性不能由 API 创建，必须留成手动步骤并提示
   const variantHint = uiMessages.find(
-    (message) => message.type === 'log' && /“方向”是可变属性/.test(String(message.message))
+    (message) => message.type === 'log' && /“展开方向”是可变属性/.test(String(message.message))
   )
   assert.ok(variantHint, '可变属性应输出手动配置提示')
 
@@ -386,7 +392,7 @@ async function run() {
 
   const generated = uiMessages.find((message) => message.type === 'generate:result')
   assert.ok(generated && generated.ok, `生成组件应成功，实际：${generated && generated.message}`)
-  assert.equal(generated.variantCount, 4, 'Drawer 的“方向”有 4 个可变值')
+  assert.equal(generated.variantCount, 2, 'Drawer 的“展开方向”只有左右两个可变值')
 
   const componentSet = createdNodes.find((node) => node.type === 'COMPONENT_SET')
   assert.ok(componentSet, '带枚举属性的组件应生成为组件集')
@@ -394,11 +400,11 @@ async function run() {
   // Array.from：vm 沙箱里创建的数组和宿主数组原型不同，deepEqual 会误报
   assert.deepEqual(
     Array.from(componentSet.children, (member) => member.name),
-    ['方向=左侧', '方向=右侧', '方向=顶部', '方向=底部']
+    ['展开方向=左侧', '展开方向=右侧']
   )
   assert.deepEqual(
     Array.from(componentSet.componentPropertyValues, (property) => property.name),
-    ['标题', '显示', '层级', '显示关闭按钮', '点击遮罩关闭']
+    ['标题', '显示', '显示外侧开关', '层级']
   )
   const generatedContract = JSON.parse(componentSet.getSharedPluginData('shroom', 'contract'))
   assert.equal(generatedContract.component, 'Drawer')

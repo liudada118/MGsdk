@@ -2,16 +2,60 @@
 // 组件清单是唯一真相：改清单后重新生成，MasterGo 属性、shroom/contract 和这里会保持一致。
 
 export const generatedComponents = {
+  "AsyncState": {
+    "import": "shroom-backend-sdk/UI/shroomui",
+    "version": "1.0.0",
+    "defaultProps": {
+      "status": "loading",
+      "message": "",
+      "actionLabel": ""
+    },
+    "propsSchema": {
+      "status": {
+        "type": "enum",
+        "values": [
+          "loading",
+          "empty",
+          "error"
+        ]
+      },
+      "message": "string",
+      "actionLabel": "string"
+    }
+  },
+  "ChartPanel": {
+    "import": "shroom-backend-sdk/UI/shroomui",
+    "version": "1.0.0",
+    "defaultProps": {
+      "title": "",
+      "description": "",
+      "footer": ""
+    },
+    "propsSchema": {
+      "title": "string",
+      "description": "string",
+      "footer": "string"
+    }
+  },
+  "DraggablePanel": {
+    "import": "shroom-backend-sdk/UI/shroomui",
+    "version": "1.0.0",
+    "defaultProps": {
+      "title": ""
+    },
+    "propsSchema": {
+      "title": "string"
+    }
+  },
   "Drawer": {
-    "import": "@/components/Drawer/Drawer",
+    "import": "shroom-backend-sdk/UI/shroomui",
     "version": "1.0.0",
     "defaultProps": {
       "title": "",
       "show": false,
       "direction": "right",
-      "zindex": 1000,
-      "close": true,
-      "asideClose": true
+      "asideClose": false,
+      "zindex": 1000
     },
     "propsSchema": {
       "title": "string",
@@ -20,42 +64,93 @@ export const generatedComponents = {
         "type": "enum",
         "values": [
           "left",
-          "right",
-          "top",
-          "bottom"
+          "right"
         ]
       },
-      "zindex": "number",
-      "close": "boolean",
-      "asideClose": "boolean"
+      "asideClose": "boolean",
+      "zindex": "number"
     }
   },
-  "IconAndText": {
-    "import": "@/components/IconAndText/IconAndText",
+  "MetricValue": {
+    "import": "shroom-backend-sdk/UI/shroomui",
     "version": "1.0.0",
     "defaultProps": {
-      "text": "",
-      "icon": "",
-      "disabled": false
+      "label": "",
+      "value": 0,
+      "unit": "",
+      "precision": 1,
+      "emptyValue": "-",
+      "indicatorColor": "",
+      "layout": "inline",
+      "align": "start"
     },
     "propsSchema": {
-      "text": "string",
-      "icon": "string",
-      "disabled": "boolean"
+      "label": "string",
+      "value": "number",
+      "unit": "string",
+      "precision": "number",
+      "emptyValue": "string",
+      "indicatorColor": "string",
+      "layout": "string",
+      "align": "string"
     }
   },
   "Select": {
-    "import": "@/components/Select/Select",
+    "import": "shroom-backend-sdk/UI/shroomui",
     "version": "1.0.0",
     "defaultProps": {
-      "placeholder": "",
-      "disabled": false,
+      "defaultValue": "",
       "options": []
     },
     "propsSchema": {
-      "placeholder": "string",
-      "disabled": "boolean",
+      "defaultValue": "string",
       "options": "array"
+    }
+  },
+  "SettingControlRow": {
+    "import": "shroom-backend-sdk/UI/shroomui",
+    "version": "1.0.0",
+    "defaultProps": {
+      "label": "",
+      "description": "",
+      "meta": "",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "precision": 0,
+      "disabled": false,
+      "switchLabel": "",
+      "switchChecked": false
+    },
+    "propsSchema": {
+      "label": "string",
+      "description": "string",
+      "meta": "string",
+      "min": "number",
+      "max": "number",
+      "step": "number",
+      "precision": "number",
+      "disabled": "boolean",
+      "switchLabel": "string",
+      "switchChecked": "boolean"
+    }
+  },
+  "ToolbarAction": {
+    "import": "shroom-backend-sdk/UI/shroomui",
+    "version": "1.0.0",
+    "defaultProps": {
+      "label": "",
+      "title": "",
+      "active": false,
+      "disabled": false,
+      "expanded": true
+    },
+    "propsSchema": {
+      "label": "string",
+      "title": "string",
+      "active": "boolean",
+      "disabled": "boolean",
+      "expanded": "boolean"
     }
   },
 }

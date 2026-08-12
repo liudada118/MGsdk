@@ -1,16 +1,16 @@
 globalThis.ShroomManifest = {
-  "$comment": "组件清单是整条链路的唯一真相。改这里之后跑 npm run generate，MasterGo 属性、shroom/contract 和前端 registry 都由它推导。字段说明见 docs/manifest.md。",
+  "$comment": "组件清单是整条链路的唯一真相，对齐 E:/ShroomSDK/UI/shroomui。改这里之后跑 npm run generate，MasterGo 属性、shroom/contract 和前端 registry 都由它推导。字段说明见 docs/manifest.md。只收录设计师会在画布上设置的 prop：回调（onChange/onClick/close/setShow）、ReactNode（icon/children/actions/legend）和运行时受控状态（value/isPaused）不在其中。",
   "schemaVersion": "1.0.0",
   "components": {
     "Drawer": {
-      "import": "@/components/Drawer/Drawer",
+      "import": "shroom-backend-sdk/UI/shroomui",
       "version": "1.0.0",
       "props": {
         "title": {
           "label": "标题",
           "type": "string",
           "default": "",
-          "canvasDefault": "设备状态"
+          "canvasDefault": "串口设置"
         },
         "show": {
           "label": "显示",
@@ -19,73 +19,246 @@ globalThis.ShroomManifest = {
           "canvasDefault": true
         },
         "direction": {
-          "label": "方向",
+          "label": "展开方向",
           "type": "enum",
           "values": {
             "左侧": "left",
-            "右侧": "right",
-            "顶部": "top",
-            "底部": "bottom"
+            "右侧": "right"
           },
           "default": "right",
           "canvas": "VARIANT"
+        },
+        "asideClose": {
+          "label": "显示外侧开关",
+          "type": "boolean",
+          "default": false
         },
         "zindex": {
           "label": "层级",
           "type": "number",
           "default": 1000
-        },
-        "close": {
-          "label": "显示关闭按钮",
-          "type": "boolean",
-          "default": true
-        },
-        "asideClose": {
-          "label": "点击遮罩关闭",
-          "type": "boolean",
-          "default": true
-        }
-      }
-    },
-    "IconAndText": {
-      "import": "@/components/IconAndText/IconAndText",
-      "version": "1.0.0",
-      "props": {
-        "text": {
-          "label": "文字",
-          "type": "string",
-          "default": ""
-        },
-        "icon": {
-          "label": "图标",
-          "type": "string",
-          "default": ""
-        },
-        "disabled": {
-          "label": "禁用",
-          "type": "boolean",
-          "default": false
         }
       }
     },
     "Select": {
-      "import": "@/components/Select/Select",
+      "import": "shroom-backend-sdk/UI/shroomui",
       "version": "1.0.0",
       "props": {
-        "placeholder": {
-          "label": "占位文字",
+        "defaultValue": {
+          "label": "默认值",
           "type": "string",
           "default": ""
+        },
+        "options": {
+          "label": "选项",
+          "type": "array",
+          "default": [],
+          "canvasDefault": "[{\"label\":\"COM3\",\"value\":\"COM3\"}]"
+        }
+      }
+    },
+    "AsyncState": {
+      "import": "shroom-backend-sdk/UI/shroomui",
+      "version": "1.0.0",
+      "props": {
+        "status": {
+          "label": "状态",
+          "type": "enum",
+          "values": {
+            "加载中": "loading",
+            "空数据": "empty",
+            "错误": "error"
+          },
+          "default": "loading",
+          "canvas": "VARIANT"
+        },
+        "message": {
+          "label": "提示文字",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "暂无采集记录"
+        },
+        "actionLabel": {
+          "label": "操作按钮文字",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "刷新"
+        }
+      }
+    },
+    "ChartPanel": {
+      "import": "shroom-backend-sdk/UI/shroomui",
+      "version": "1.0.0",
+      "props": {
+        "title": {
+          "label": "标题",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "实时压力"
+        },
+        "description": {
+          "label": "说明",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "最近 60 秒"
+        },
+        "footer": {
+          "label": "底部文字",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "采集频率 12Hz"
+        }
+      }
+    },
+    "MetricValue": {
+      "import": "shroom-backend-sdk/UI/shroomui",
+      "version": "1.0.0",
+      "props": {
+        "label": {
+          "label": "指标名",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "平均压力"
+        },
+        "value": {
+          "label": "数值",
+          "type": "number",
+          "default": 0,
+          "canvasDefault": "128.45"
+        },
+        "unit": {
+          "label": "单位",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "PA"
+        },
+        "precision": {
+          "label": "小数位",
+          "type": "number",
+          "default": 1
+        },
+        "emptyValue": {
+          "label": "空值占位",
+          "type": "string",
+          "default": "-"
+        },
+        "indicatorColor": {
+          "label": "状态色",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "#0072ef"
+        },
+        "layout": {
+          "label": "排版",
+          "type": "string",
+          "default": "inline"
+        },
+        "align": {
+          "label": "对齐",
+          "type": "string",
+          "default": "start"
+        }
+      }
+    },
+    "ToolbarAction": {
+      "import": "shroom-backend-sdk/UI/shroomui",
+      "version": "1.0.0",
+      "props": {
+        "label": {
+          "label": "文字",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "采集"
+        },
+        "title": {
+          "label": "悬浮提示",
+          "type": "string",
+          "default": ""
+        },
+        "active": {
+          "label": "激活",
+          "type": "boolean",
+          "default": false
         },
         "disabled": {
           "label": "禁用",
           "type": "boolean",
           "default": false
         },
-        "options": {
-          "label": "选项",
-          "type": "array",
-          "default": []
+        "expanded": {
+          "label": "展开文字",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "SettingControlRow": {
+      "import": "shroom-backend-sdk/UI/shroomui",
+      "version": "1.0.0",
+      "props": {
+        "label": {
+          "label": "标签",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "压力阈值"
+        },
+        "description": {
+          "label": "说明",
+          "type": "string",
+          "default": ""
+        },
+        "meta": {
+          "label": "附加信息",
+          "type": "string",
+          "default": ""
+        },
+        "min": {
+          "label": "最小值",
+          "type": "number",
+          "default": 0
+        },
+        "max": {
+          "label": "最大值",
+          "type": "number",
+          "default": 100
+        },
+        "step": {
+          "label": "步长",
+          "type": "number",
+          "default": 1
+        },
+        "precision": {
+          "label": "小数位",
+          "type": "number",
+          "default": 0
+        },
+        "disabled": {
+          "label": "禁用",
+          "type": "boolean",
+          "default": false
+        },
+        "switchLabel": {
+          "label": "开关文字",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "启用"
+        },
+        "switchChecked": {
+          "label": "开关打开",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "DraggablePanel": {
+      "import": "shroom-backend-sdk/UI/shroomui",
+      "version": "1.0.0",
+      "props": {
+        "title": {
+          "label": "标题",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "串口调试面板"
         }
       }
     }

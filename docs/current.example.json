@@ -12,18 +12,17 @@
   "instances": [
     {
       "id": "example-drawer",
-      "name": "Drawer/设备状态",
+      "name": "Drawer/串口设置",
       "component": "Drawer",
       "slot": "equipPanel.drawer",
-      "import": "@/components/Drawer/Drawer",
+      "import": "shroom-backend-sdk/UI/shroomui",
       "version": "1.0.0",
       "props": {
-        "title": "设备状态",
+        "title": "串口设置",
         "show": true,
         "direction": "right",
-        "zindex": 1000,
-        "close": true,
-        "asideClose": true
+        "asideClose": true,
+        "zindex": 1000
       },
       "unmapped": {}
     }

@@ -34,24 +34,33 @@ test('仓库里的组件清单本身是合法的', () => {
 })
 
 test('组件按名字排序列出', () => {
-  assert.deepEqual(derive.listComponents(manifest), ['Drawer', 'IconAndText', 'Select'])
+  assert.deepEqual(derive.listComponents(manifest), [
+    'AsyncState',
+    'ChartPanel',
+    'DraggablePanel',
+    'Drawer',
+    'MetricValue',
+    'Select',
+    'SettingControlRow',
+    'ToolbarAction'
+  ])
 })
 
 test('契约由清单推导：propMap、valueMap、numberProps、jsonProps', () => {
   const contract = derive.deriveContract(manifest, 'Drawer')
   assert.equal(contract.component, 'Drawer')
-  assert.equal(contract.import, '@/components/Drawer/Drawer')
+  assert.equal(contract.import, 'shroom-backend-sdk/UI/shroomui')
   assert.equal(contract.propMap['标题'], 'title')
-  assert.equal(contract.propMap['点击遮罩关闭'], 'asideClose')
-  assert.deepEqual(contract.valueMap.direction, {
-    左侧: 'left',
-    右侧: 'right',
-    顶部: 'top',
-    底部: 'bottom'
-  })
+  assert.equal(contract.propMap['显示外侧开关'], 'asideClose')
+  // Drawer 只支持左右展开，没有顶部/底部
+  assert.deepEqual(contract.valueMap.direction, { 左侧: 'left', 右侧: 'right' })
   assert.deepEqual(contract.numberProps, ['zindex'])
   assert.deepEqual(contract.jsonProps, [])
   assert.deepEqual(derive.deriveContract(manifest, 'Select').jsonProps, ['options'])
+  assert.deepEqual(
+    derive.deriveContract(manifest, 'SettingControlRow').numberProps,
+    ['min', 'max', 'step', 'precision']
+  )
 })
 
 test('画布属性跳过可变属性，并按 canvasDefault 生成默认值', () => {
@@ -59,19 +68,21 @@ test('画布属性跳过可变属性，并按 canvasDefault 生成默认值', ()
   assert.deepEqual(properties.map((property) => property.name), [
     '标题',
     '显示',
-    '层级',
-    '显示关闭按钮',
-    '点击遮罩关闭'
+    '显示外侧开关',
+    '层级'
   ])
-  assert.deepEqual(properties[0], { prop: 'title', name: '标题', type: 'TEXT', defaultValue: '设备状态' })
+  assert.deepEqual(properties[0], { prop: 'title', name: '标题', type: 'TEXT', defaultValue: '串口设置' })
   assert.deepEqual(properties[1], { prop: 'show', name: '显示', type: 'BOOLEAN', defaultValue: true })
   // 数字默认值必须转成字符串，MasterGo 的 TEXT 属性不接受数字
-  assert.deepEqual(properties[2], { prop: 'zindex', name: '层级', type: 'TEXT', defaultValue: '1000' })
+  assert.deepEqual(properties[3], { prop: 'zindex', name: '层级', type: 'TEXT', defaultValue: '1000' })
 })
 
 test('可变属性单独列出，带上需要手动配置的可变值', () => {
   assert.deepEqual(derive.deriveVariantProps(manifest, 'Drawer'), [
-    { prop: 'direction', name: '方向', values: ['左侧', '右侧', '顶部', '底部'] }
+    { prop: 'direction', name: '展开方向', values: ['左侧', '右侧'] }
+  ])
+  assert.deepEqual(derive.deriveVariantProps(manifest, 'AsyncState'), [
+    { prop: 'status', name: '状态', values: ['加载中', '空数据', '错误'] }
   ])
   assert.deepEqual(derive.deriveVariantProps(manifest, 'Select'), [])
 })
@@ -81,15 +92,16 @@ test('registry 条目由清单推导，enum 转成代码值枚举', () => {
   assert.equal(entry.defaultProps.title, '')
   assert.equal(entry.defaultProps.zindex, 1000)
   assert.equal(entry.propsSchema.zindex, 'number')
-  assert.deepEqual(entry.propsSchema.direction, {
-    type: 'enum',
-    values: ['left', 'right', 'top', 'bottom']
-  })
+  assert.deepEqual(entry.propsSchema.direction, { type: 'enum', values: ['left', 'right'] })
   assert.deepEqual(derive.deriveRegistryEntry(manifest, 'Select').propsSchema.options, 'array')
+  assert.deepEqual(
+    derive.deriveRegistryEntry(manifest, 'AsyncState').propsSchema.status,
+    { type: 'enum', values: ['loading', 'empty', 'error'] }
+  )
 })
 
 test('未知组件给出可选组件列表', () => {
-  assert.throws(() => derive.deriveContract(manifest, 'Nope'), /Drawer、IconAndText、Select/)
+  assert.throws(() => derive.deriveContract(manifest, 'Nope'), /Drawer、MetricValue、Select/)
 })
 
 test('拒绝非 1.x 清单和空 components', () => {
