@@ -1,0 +1,22 @@
+{
+  "name": "@shroom/design-consumer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shroom 设计桥的 React/Zustand 前端配置消费层",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "peerDependencies": {
+    "react": ">=16.8",
+    "zustand": ">=4.5 <6"
+  },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.5"
+  }
+}

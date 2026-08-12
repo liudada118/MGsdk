@@ -1,0 +1,93 @@
+{
+  "$comment": "组件清单是整条链路的唯一真相。改这里之后跑 npm run generate，MasterGo 属性、shroom/contract 和前端 registry 都由它推导。字段说明见 docs/manifest.md。",
+  "schemaVersion": "1.0.0",
+  "components": {
+    "Drawer": {
+      "import": "@/components/Drawer/Drawer",
+      "version": "1.0.0",
+      "props": {
+        "title": {
+          "label": "标题",
+          "type": "string",
+          "default": "",
+          "canvasDefault": "设备状态"
+        },
+        "show": {
+          "label": "显示",
+          "type": "boolean",
+          "default": false,
+          "canvasDefault": true
+        },
+        "direction": {
+          "label": "方向",
+          "type": "enum",
+          "values": {
+            "左侧": "left",
+            "右侧": "right",
+            "顶部": "top",
+            "底部": "bottom"
+          },
+          "default": "right",
+          "canvas": "VARIANT"
+        },
+        "zindex": {
+          "label": "层级",
+          "type": "number",
+          "default": 1000
+        },
+        "close": {
+          "label": "显示关闭按钮",
+          "type": "boolean",
+          "default": true
+        },
+        "asideClose": {
+          "label": "点击遮罩关闭",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "IconAndText": {
+      "import": "@/components/IconAndText/IconAndText",
+      "version": "1.0.0",
+      "props": {
+        "text": {
+          "label": "文字",
+          "type": "string",
+          "default": ""
+        },
+        "icon": {
+          "label": "图标",
+          "type": "string",
+          "default": ""
+        },
+        "disabled": {
+          "label": "禁用",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "Select": {
+      "import": "@/components/Select/Select",
+      "version": "1.0.0",
+      "props": {
+        "placeholder": {
+          "label": "占位文字",
+          "type": "string",
+          "default": ""
+        },
+        "disabled": {
+          "label": "禁用",
+          "type": "boolean",
+          "default": false
+        },
+        "options": {
+          "label": "选项",
+          "type": "array",
+          "default": []
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shroom.local/schemas/design-config.schema.json",
+  "title": "Shroom Design Bridge Configuration",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schemaVersion",
+    "exportedAt",
+    "instances"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1\\."
+    },
+    "file": {
+      "$ref": "#/$defs/source"
+    },
+    "page": {
+      "$ref": "#/$defs/source"
+    },
+    "exportedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "instances": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/instance"
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "instance": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "name",
+        "component",
+        "props"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "component": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot": {
+          "description": "稳定绑定键：画布实例与代码调用点的一一对应关系，改图层名不失效",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]{1,64}$"
+        },
+        "import": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "props": {
+          "type": "object"
+        },
+        "unmapped": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}
+

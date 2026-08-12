@@ -1,0 +1,6 @@
+{
+  "name": "Shroom 设计桥",
+  "api": "1.0.0",
+  "main": "./main.js",
+  "ui": "./index.html"
+}

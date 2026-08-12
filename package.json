@@ -1,0 +1,18 @@
+{
+  "name": "shroom-design-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MasterGo 到 Shroom 前端的本地实时设计配置桥",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix plugin && npm install --prefix shroom-patch/design",
+    "test": "node scripts/generate-registry.js --check && npm test --prefix server && npm test --prefix plugin && npm test --prefix shroom-patch/design && node --test scripts/check-export.test.js && node scripts/check-export.js docs/current.example.json",
+    "generate": "node scripts/generate-registry.js",
+    "build": "npm run generate && npm run build --prefix plugin",
+    "export:bridge": "node server/standalone.js --port 7311 --dir ./exports",
+    "export:check": "node scripts/check-export.js",
+    "verify": "npm test && npm run build"
+  }
+}

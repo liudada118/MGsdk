@@ -1,0 +1,56 @@
+{
+  "Drawer": {
+    "component": "Drawer",
+    "import": "@/components/Drawer/Drawer",
+    "version": "1.0.0",
+    "propMap": {
+      "显示": "show",
+      "标题": "title",
+      "方向": "direction",
+      "层级": "zindex",
+      "显示关闭按钮": "close",
+      "点击遮罩关闭": "asideClose"
+    },
+    "valueMap": {
+      "direction": {
+        "左侧": "left",
+        "右侧": "right",
+        "顶部": "top",
+        "底部": "bottom"
+      }
+    },
+    "numberProps": [
+      "zindex"
+    ],
+    "jsonProps": []
+  },
+  "IconAndText": {
+    "component": "IconAndText",
+    "import": "@/components/IconAndText/IconAndText",
+    "version": "1.0.0",
+    "propMap": {
+      "文字": "text",
+      "图标": "icon",
+      "禁用": "disabled"
+    },
+    "valueMap": {},
+    "numberProps": [],
+    "jsonProps": []
+  },
+  "Select": {
+    "component": "Select",
+    "import": "@/components/Select/Select",
+    "version": "1.0.0",
+    "propMap": {
+      "占位文字": "placeholder",
+      "禁用": "disabled",
+      "选项": "options"
+    },
+    "valueMap": {},
+    "numberProps": [],
+    "jsonProps": [
+      "options"
+    ]
+  }
+}
+

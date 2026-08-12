@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "file": {
+    "id": "example-file",
+    "name": "座椅控制台"
+  },
+  "page": {
+    "id": "example-page",
+    "name": "设备状态"
+  },
+  "exportedAt": "2026-08-10T08:00:00.000Z",
+  "instances": [
+    {
+      "id": "example-drawer",
+      "name": "Drawer/设备状态",
+      "component": "Drawer",
+      "slot": "equipPanel.drawer",
+      "import": "@/components/Drawer/Drawer",
+      "version": "1.0.0",
+      "props": {
+        "title": "设备状态",
+        "show": true,
+        "direction": "right",
+        "zindex": 1000,
+        "close": true,
+        "asideClose": true
+      },
+      "unmapped": {}
+    }
+  ]
+}

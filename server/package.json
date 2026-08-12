@@ -1,0 +1,17 @@
+{
+  "name": "shroom-design-bridge-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local WebSocket bridge between the MasterGo plugin and the Shroom frontend.",
+  "main": "designBridge.js",
+  "scripts": {
+    "start": "node standalone.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
